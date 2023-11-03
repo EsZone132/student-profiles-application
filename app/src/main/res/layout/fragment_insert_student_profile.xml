@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <Button
+        android:id="@+id/cancelButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginStart="92dp"
+        android:layout_marginBottom="197dp"
+        android:text="CANCEL" />
+
+    <EditText
+        android:id="@+id/nameEditText"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="200dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Name" />
+
+    <EditText
+        android:id="@+id/surnameEditText"
+        android:digits="ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz-"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="133dp"
+        android:ems="10"
+        android:inputType="text"
+        android:hint="Surame" />
+
+    <Button
+        android:id="@+id/saveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginEnd="104dp"
+        android:layout_marginBottom="197dp"
+        android:text="SAVE" />
+
+    <EditText
+        android:id="@+id/studentIDEditTextNumber"
+        android:digits="1234567890"
+        android:maxLength="8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="273dp"
+        android:ems="10"
+        android:inputType="number"
+        android:hint="Student ID"/>
+
+    <EditText
+        android:id="@+id/gpaEditTextNumberDecimal"
+        android:digits="1234567890."
+        android:maxLength="4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        android:hint="Student GPA" />
+</RelativeLayout>
