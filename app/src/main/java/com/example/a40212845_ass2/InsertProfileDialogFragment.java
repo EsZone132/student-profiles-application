@@ -50,9 +50,9 @@ public class InsertProfileDialogFragment extends DialogFragment {
                 int id = Integer.parseInt(studentIDEditText.getText().toString());
                 float gpa = Float.parseFloat(gpaEditText.getText().toString());
 
-                if (id < 10000000) {
+                if (id < 10000000 || id > 99999999) {
                     Toast.makeText(getContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
-                } else if (gpa == 0 || gpa > 4.3) {
+                } else if (gpa == 0 || gpa > 4.31) {
                     Toast.makeText(getContext(), "Invalid GPA", Toast.LENGTH_SHORT).show();
                 } else if (isEmpty(surname) || isEmpty(name) || String.valueOf(id).equals("") || String.valueOf(gpa).equals("")) {
                     Toast.makeText(getContext(), "Empty Field(s)", Toast.LENGTH_SHORT).show();

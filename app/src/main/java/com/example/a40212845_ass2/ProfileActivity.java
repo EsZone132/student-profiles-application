@@ -33,7 +33,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected TextView header;
     protected Button deleteButton;
     protected DatabaseHelper dbHelper = new DatabaseHelper(this);
-    protected String accessType = "Closed";
     protected String surname = "";
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
@@ -77,6 +76,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dbHelper.deleteStudentProfile(surname);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd @ hh:mm:ss");
+                String timestamp = dateFormat.format(new Date());
+                dbHelper.insertAccess(new Access(profile_id, "Deleted", timestamp));
+                finish();
                 goToMainActivity();
             }
         });
@@ -86,7 +89,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd @ hh:mm:ss");
                 String timestamp = dateFormat.format(new Date());
-                dbHelper.insertAccess(new Access(profile_id, accessType, timestamp));
+                dbHelper.insertAccess(new Access(profile_id, "Closed", timestamp));
                 finish();
             }
         });

@@ -79,8 +79,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public long deleteStudentProfile(String surname){
         long id = -1;
         SQLiteDatabase db =this.getReadableDatabase();
-        db.delete(Config.STUDENT_PROFILE_TABLE_NAME, "name=?", new String[] {surname});
-        db.close();
+        try{
+            id = db.delete(Config.STUDENT_PROFILE_TABLE_NAME, Config.COLUMN_STUDENT_SURNAME + "=?", new String[]{surname});
+        }
+        catch (SQLException e){
+            Log.d(TAG, "EXCEPTION " + e);
+            Toast.makeText(context, "Failed: " + e, Toast.LENGTH_SHORT).show();
+        }
+        finally{
+            db.close();
+        }
         return id;
     }
     public long insertAccess(Access access){
