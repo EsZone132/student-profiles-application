@@ -11,25 +11,6 @@
         layout="@layout/toolbar" />
 
     <TextView
-        android:id="@+id/accessHistory"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="251dp"
-        android:text="Access History" />
-
-    <ListView
-        android:id="@+id/accessListView"
-        android:layout_width="match_parent"
-        android:layout_height="334dp"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentBottom="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginBottom="120dp" />
-
-    <TextView
         android:id="@+id/userProfile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -43,46 +24,36 @@
         android:id="@+id/Surname"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="116dp" />
+        android:layout_below="@id/userProfile"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/Name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="135dp" />
+        android:layout_below="@id/Surname"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/id"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="153dp" />
+        android:layout_below="@id/Name"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/gpa"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="172dp" />
+        android:layout_below="@id/id"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/dateCreated"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_alignParentTop="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="191dp" />
+        android:layout_below="@id/gpa"
+        android:layout_alignParentStart="true" />
 
     <Button
         android:id="@+id/deleteButton"
@@ -92,4 +63,11 @@
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="38dp"
         android:text="DELETE" />
+
+    <ListView
+    android:id="@+id/accessListView"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:layout_below="@id/dateCreated"
+        android:layout_marginBottom="120dp" />
 </RelativeLayout>

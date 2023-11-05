@@ -30,10 +30,8 @@ public class ProfileActivity extends AppCompatActivity {
     protected TextView id;
     protected TextView gpa;
     protected TextView dateCreated;
-    protected TextView header;
     protected Button deleteButton;
     protected DatabaseHelper dbHelper = new DatabaseHelper(this);
-    protected String accessType = "Closed";
     protected String surname = "";
 
     @SuppressLint({"MissingInflatedId", "SetTextI18n"})
@@ -50,7 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
         id = findViewById(R.id.id);
         gpa = findViewById(R.id.gpa);
         dateCreated = findViewById(R.id.dateCreated);
-        header = findViewById(R.id.accessHistory);
         deleteButton = findViewById(R.id.deleteButton);
 
         setSupportActionBar(toolbar);
@@ -77,6 +74,10 @@ public class ProfileActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 dbHelper.deleteStudentProfile(surname);
+                SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd @ hh:mm:ss");
+                String timestamp = dateFormat.format(new Date());
+                dbHelper.insertAccess(new Access(profile_id, "Deleted", timestamp));
+                finish();
                 goToMainActivity();
             }
         });
@@ -86,7 +87,7 @@ public class ProfileActivity extends AppCompatActivity {
             public void onClick(View v) {
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd @ hh:mm:ss");
                 String timestamp = dateFormat.format(new Date());
-                dbHelper.insertAccess(new Access(profile_id, accessType, timestamp));
+                dbHelper.insertAccess(new Access(profile_id, "Closed", timestamp));
                 finish();
             }
         });
@@ -100,6 +101,8 @@ public class ProfileActivity extends AppCompatActivity {
             accessListText.add(temp);
         }
         Collections.reverse(accessListText);
+        View headerView = getLayoutInflater().inflate(R.layout.list_header, null);
+        accessListView.addHeaderView(headerView);
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, accessListText);
         accessListView.setAdapter(arrayAdapter);
     }
