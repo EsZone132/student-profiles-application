@@ -47,15 +47,21 @@ public class InsertProfileDialogFragment extends DialogFragment {
             public void onClick(View view) {
                 String surname = studentSurnameEditText.getText().toString();
                 String name = studentNameEditText.getText().toString();
+                String idText = studentIDEditText.getText().toString();
+                String gpaText = gpaEditText.getText().toString();
+
+                if (isEmpty(surname) || isEmpty(name) || isEmpty(idText) || isEmpty(gpaText)) {
+                    Toast.makeText(getContext(), "Empty Field(s)", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+
                 int id = Integer.parseInt(studentIDEditText.getText().toString());
                 float gpa = Float.parseFloat(gpaEditText.getText().toString());
 
-                if (id < 10000000 || id > 99999999) {
-                    Toast.makeText(getContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
-                } else if (gpa == 0 || gpa > 4.31) {
+                if (gpa == 0 || gpa > 4.31) {
                     Toast.makeText(getContext(), "Invalid GPA", Toast.LENGTH_SHORT).show();
-                } else if (isEmpty(surname) || isEmpty(name) || String.valueOf(id).equals("") || String.valueOf(gpa).equals("")) {
-                    Toast.makeText(getContext(), "Empty Field(s)", Toast.LENGTH_SHORT).show();
+                } else if (id < 10000000 || id > 99999999) {
+                    Toast.makeText(getContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
                 } else if (idIsValid(id)) {
                     Toast.makeText(getContext(), "ID already exists", Toast.LENGTH_SHORT).show();
                 } else {
