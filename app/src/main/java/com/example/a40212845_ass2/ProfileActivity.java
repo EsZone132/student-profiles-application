@@ -30,7 +30,6 @@ public class ProfileActivity extends AppCompatActivity {
     protected TextView id;
     protected TextView gpa;
     protected TextView dateCreated;
-    protected TextView header;
     protected Button deleteButton;
     protected DatabaseHelper dbHelper = new DatabaseHelper(this);
     protected String surname = "";
@@ -49,7 +48,6 @@ public class ProfileActivity extends AppCompatActivity {
         id = findViewById(R.id.id);
         gpa = findViewById(R.id.gpa);
         dateCreated = findViewById(R.id.dateCreated);
-        header = findViewById(R.id.accessHistory);
         deleteButton = findViewById(R.id.deleteButton);
 
         setSupportActionBar(toolbar);
@@ -103,6 +101,8 @@ public class ProfileActivity extends AppCompatActivity {
             accessListText.add(temp);
         }
         Collections.reverse(accessListText);
+        View headerView = getLayoutInflater().inflate(R.layout.list_header, null);
+        accessListView.addHeaderView(headerView);
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, accessListText);
         accessListView.setAdapter(arrayAdapter);
     }
