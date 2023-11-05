@@ -50,17 +50,20 @@ public class ProfileActivity extends AppCompatActivity {
         dateCreated = findViewById(R.id.dateCreated);
         deleteButton = findViewById(R.id.deleteButton);
 
+        // Adds toolbar
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Profile Activity");
         ActionBar actionBar = getSupportActionBar();
         actionBar.setDisplayHomeAsUpEnabled(true); //Back button
 
         Intent intent = getIntent();
-        int profile_id = intent.getIntExtra("profile_id",0);
+        int profile_id = intent.getIntExtra("profile_id",0); // takes the profile id which was passed by main activity
 
+        // Puts student profiles in a list
         List<StudentProfile> students = dbHelper.getAllProfiles();
+        // Displays all the information of the profile clicked in main activity
         for(int i = 0; i < students.size(); i++){
-            if(profile_id == students.get(i).getProfileID()){
+            if(profile_id == students.get(i).getProfileID()){ // Check if profile id passed matches with one of the profiles in the database
                 surname = students.get(i).getSurname();
                 Surname.setText("Surname: " + students.get(i).getSurname());
                 Name.setText("Name: " + students.get(i).getName());
@@ -73,18 +76,19 @@ public class ProfileActivity extends AppCompatActivity {
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                dbHelper.deleteStudentProfile(surname);
+                dbHelper.deleteStudentProfile(surname); // Sends surname to the delete function to indicate function which profile to be deleted
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd @ hh:mm:ss");
                 String timestamp = dateFormat.format(new Date());
-                dbHelper.insertAccess(new Access(profile_id, "Deleted", timestamp));
+                dbHelper.insertAccess(new Access(profile_id, "Deleted", timestamp)); // Creates access entry for deleted profile
                 finish();
-                goToMainActivity();
+                goToMainActivity(); // Goes back to main activity when delete button is pressed
             }
         });
 
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                //Takes the timestamp and adds closed entry in access table when back button is pressed
                 SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd @ hh:mm:ss");
                 String timestamp = dateFormat.format(new Date());
                 dbHelper.insertAccess(new Access(profile_id, "Closed", timestamp));
@@ -92,6 +96,7 @@ public class ProfileActivity extends AppCompatActivity {
             }
         });
 
+        //Display list of the Access entries for the profile clicked
         List<Access> access = dbHelper.getAllAccess(profile_id);
         ArrayList<String> accessListText = new ArrayList<>();
         for(int i = 0; i < access.size(); i++){
@@ -101,6 +106,8 @@ public class ProfileActivity extends AppCompatActivity {
             accessListText.add(temp);
         }
         Collections.reverse(accessListText);
+
+        //Adds header to access list
         View headerView = getLayoutInflater().inflate(R.layout.list_header, null);
         accessListView.addHeaderView(headerView);
         ArrayAdapter arrayAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, accessListText);

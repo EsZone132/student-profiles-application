@@ -28,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
+        //Create student profile database table
         String CREATE_STUDENT_TABLE = "CREATE TABLE "
                 + Config.STUDENT_PROFILE_TABLE_NAME
                 + " (" + Config.COLUMN_STUDENT_ID + " INTEGER NOT NULL, "
@@ -40,6 +41,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         sqLiteDatabase.execSQL(CREATE_STUDENT_TABLE);
         Log.d(TAG, "db created");
 
+        //Creates access database table
         String CREATE_ACCESS_TABLE = "CREATE TABLE "
                 + Config.ACCESS_TABLE_NAME
                 + " (" + Config.COLUMN_ACCESS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
@@ -57,6 +59,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public long insertStudentProfile(StudentProfile studentProfile){
         long id = -1;
+        //Takes StudentProfile object and takes the information to add into the database in the Profile table
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Config.COLUMN_STUDENT_SURNAME, studentProfile.getSurname());
@@ -80,7 +83,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         long id = -1;
         SQLiteDatabase db =this.getReadableDatabase();
         try{
-            id = db.delete(Config.STUDENT_PROFILE_TABLE_NAME, Config.COLUMN_STUDENT_SURNAME + "=?", new String[]{surname});
+            id = db.delete(Config.STUDENT_PROFILE_TABLE_NAME, Config.COLUMN_STUDENT_SURNAME + "=?", new String[]{surname}); // Delete profile with profile surname
         }
         catch (SQLException e){
             Log.d(TAG, "EXCEPTION " + e);
@@ -93,6 +96,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     }
     public long insertAccess(Access access){
         long id = -1;
+        // Take Access object and the parameters of the constructors into the database in the Access table in its respective column
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(Config.COLUMN_PROFILE_ID, access.getProfileId());
@@ -111,6 +115,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         return id;
     }
     //Function necessary for ListView
+    //Function reads each information in the table by moving cursor, until cursor can't move to the next
     public List<StudentProfile> getAllProfiles(){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
@@ -126,7 +131,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                         @SuppressLint("Range") int profileID = cursor.getInt(cursor.getColumnIndex(Config.COLUMN_STUDENT_ID));
                         @SuppressLint("Range") float gpa = cursor.getFloat(cursor.getColumnIndex(Config.COLUMN_STUDENT_GPA));
                         @SuppressLint("Range") String dateCreated = cursor.getString(cursor.getColumnIndex(Config.COLUMN_DATE_CREATED));
-
+                        //adds the StudentProfile object in a List
                         studentProfiles.add(new StudentProfile(surname, name, profileID, gpa, dateCreated));
                     }while(cursor.moveToNext());
                     return studentProfiles;
@@ -144,6 +149,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         }
         return Collections.emptyList();
     }
+    //Same concept as getAllProfiles
     public List<Access> getAllAccess(int id){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = null;
@@ -189,7 +195,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
             if(cursor!=null){
                 if(cursor.moveToFirst()){
                     do{
-                        totalProfiles++;
+                        totalProfiles++; //Count of student profiles by moving the cursor in the table until cursor can't move to next
                     }while(cursor.moveToNext());
                     return totalProfiles;
                 }

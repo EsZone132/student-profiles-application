@@ -50,6 +50,7 @@ public class InsertProfileDialogFragment extends DialogFragment {
                 String idText = studentIDEditText.getText().toString();
                 String gpaText = gpaEditText.getText().toString();
 
+                //Checks if any text fields are empty
                 if (isEmpty(surname) || isEmpty(name) || isEmpty(idText) || isEmpty(gpaText)) {
                     Toast.makeText(getContext(), "Empty Field(s)", Toast.LENGTH_SHORT).show();
                     return;
@@ -58,19 +59,22 @@ public class InsertProfileDialogFragment extends DialogFragment {
                 int id = Integer.parseInt(studentIDEditText.getText().toString());
                 float gpa = Float.parseFloat(gpaEditText.getText().toString());
 
-                if (gpa == 0 || gpa > 4.31) {
+                if (gpa == 0 || gpa > 4.31) { //Checks if gpa is between 0 to 4.3
                     Toast.makeText(getContext(), "Invalid GPA", Toast.LENGTH_SHORT).show();
-                } else if (id < 10000000 || id > 99999999) {
+                } else if (id < 10000000 || id > 99999999) { //Checks if id is 8 digits
                     Toast.makeText(getContext(), "Invalid ID", Toast.LENGTH_SHORT).show();
-                } else if (idIsValid(id)) {
+                } else if (idIsValid(id)) { // Checks if id already exists
                     Toast.makeText(getContext(), "ID already exists", Toast.LENGTH_SHORT).show();
                 } else {
                     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd @ hh:mm:ss");
                     String dateTimeCreated = dateFormat.format(new Date());
                     DatabaseHelper dbHelper = new DatabaseHelper((getActivity()));
+                    // Insert new profile in the profile table
                     dbHelper.insertStudentProfile(new StudentProfile(surname, name, id, gpa, dateTimeCreated));
                     String accessType = "Created";
+                    // Insert created acces entry for new profile
                     dbHelper.insertAccess(new Access(id, accessType, dateTimeCreated));
+                    // Reloads list displayed in main activity
                     ((MainActivity) getActivity()).loadListView();
                     getDialog().dismiss();
                 }
@@ -79,15 +83,17 @@ public class InsertProfileDialogFragment extends DialogFragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getDialog().dismiss();
+                getDialog().dismiss(); // Dialog fragment disappears when cancel button is clicked
             }
         });
         return view;
     }
     public boolean idIsValid(int id){
         DatabaseHelper dbHelper = new DatabaseHelper((getActivity()));
+        // Put all profiles in a list
         List<StudentProfile> students = dbHelper.getAllProfiles();
         boolean invalid = false;
+        // Go through the list the check if id already exists
         for(int i = 0; i < students.size(); i++){
             if(id == students.get(i).getProfileID()){
                 invalid = true;
